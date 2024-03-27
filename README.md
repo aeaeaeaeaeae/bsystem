@@ -1,6 +1,6 @@
 # B-System for Houdini
 
-B-System is a instance editing plugin for [SideFX Houdini](https://www.sidefx.com/products/houdini/), you can get it on Gumroad.
+B-System is a instance editing plugin for [SideFX Houdini](https://www.sidefx.com/products/houdini/), you can get it on [Gumroad](https://ae43ae43.gumroad.com/l/bahri).
 
 ## Installation
 
