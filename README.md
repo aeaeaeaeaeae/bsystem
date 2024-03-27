@@ -41,7 +41,9 @@ For details on **nodes** and node **parameters** see the node help cards in Houd
 
 ## B-System geometry
 
-The geometry used in the B-System Edit SOP follows a simple convention that defines the instances and their transform, the hierarchy between them and the direction of this hierarchy. The hierarchy can't contain loops.
+The geometry used in the B-System Edit SOP follows a simple convention that defines the instances and their transform, the hierarchy between them and the direction of this hierarchy. Be aware that the hierarchy can't contain loops, loops will be broken up when merged into a B-System Edit SOP.
+
+### Attribute and groups
 
 |           | vex             | class | type            | description                       |
 | --------- | --------------- | ----- | --------------- | --------------------------------- |
@@ -58,7 +60,7 @@ The `s@name` point attributes stores the instance name, this works the same way 
 
 The `3@transform` point attribute stores the instance rotation and scale. The rotation matrix is in world space. It works the same way as **KineFX** bone transforms.
 
-Note that `p@orient`, `@N`, `@up`, `@scale` and `@pscale` is not used for setting the rotation and scale, these attributes are ignored. Check out the vex [`maketransform()`](https://www.sidefx.com/docs/houdini/vex/functions/maketransform.html) and [`scale()`](https://www.sidefx.com/docs/houdini/vex/functions/scale.html) functions for ways to quickly convert these attributes to a rotation matrix.
+Note that `p@orient`, `@N`, `@up`, `@scale` and `@pscale` is not used for setting the rotation and scale, these attributes are ignored. Check out the vex functions [`maketransform()`](https://www.sidefx.com/docs/houdini/vex/functions/maketransform.html) and [`scale()`](https://www.sidefx.com/docs/houdini/vex/functions/scale.html) for ways to quickly convert these attributes to a rotation matrix.
 
 
 ```c
@@ -76,11 +78,11 @@ scale(3@transform, set(@pscale, @pscale, @pscale));
 
 Instances on a B-System are connected in a branching hierarchy, the `roots` point group defines the origin and direction of this hierarchy. A set of connected instances can only have a single root point. Multiple connected sets will have a root for each set. Single unconnected instances are also roots.
 
-Using a point to define the direction of the hierarchy is simpler than using vertex order, since vertex order is hard to visualize, edit and debug in Houdini.
+Using a point to define the direction of the hierarchy is simpler than using vertex order, since vertex order is tricky to visualize, edit and debug in Houdini.
 
 ### Assembly name s@assembly
 
-Assemblies are labeled sets of instances. It can be defined as one or more set of connected points. Apart from the `s@assembly` point attribute
+Assemblies are labeled sets of instances, they are defined by the `s@assembly` point attribute. An assembly does not have to be fully connected, from any combination of connected and unconnected instances. Apart from the `s@assembly` attribute the definition of an assembly is identical to regular bsystem geometry.
 
 ## Hotkeys
 
