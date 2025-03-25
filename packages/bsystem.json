@@ -1,8 +1,0 @@
-{
-  "env": [
-    {
-      "BSYSTEM": "$HOUDINI_USER_PREF_DIR/bsystem<version>"
-    }
-  ],
-  "path": "$BSYSTEM"
-}
