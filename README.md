@@ -32,6 +32,12 @@ B-System uses the [package](https://www.sidefx.com/docs/houdini/ref/plugins.html
 
 For details on **nodes** and node **parameters** see the node help cards in Houdini.
 
+## Quickstart
+
+Use the `B-System Configure Basic` for a quick basic setup.
+
+![B-System Configure Basic](https://github.com/aeaeaeaeaeae/bsystem/blob/main/imgs/B-System%20Configure%20Basic.gif)
+
 ## Toturials
 
 + [Viewport, handles and editing](https://youtu.be/edli7ctcxrU)
