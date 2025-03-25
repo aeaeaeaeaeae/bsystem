@@ -4,19 +4,21 @@ B-System is a instance editing plugin for [SideFX Houdini](https://www.sidefx.co
 
 ## Installation
 
-B-System uses the [package](https://www.sidefx.com/docs/houdini/ref/plugins.html) format for Houdini plugins, it requires a `bsystem.json` file in the `$HOUDINI_USER_PREF_DIR/packages` folder to load the plugin.
+B-System uses the [package](https://www.sidefx.com/docs/houdini/ref/plugins.html) format for Houdini plugins. It supports installing from a package archive:
 
-1. Download `.zip` version from the Gumroad product page.
-2. Unzip the content and ...
-	+ Copy the `bsystem` folder to `$HOUDINI_USER_PREF_DIR`.
-	+ Copy the `bsystem.json` file to `$HOUDINI_USER_PREF_DIR/packages`.
+1. Download `.zip` version from [Gumroad](https://ae43ae43.gumroad.com/l/bahri).
+2. Run Houdini and open the **Package Browser** pane, found under `Inspectors > Package Browser`.
+3. Go to `File > Install Package Archive...`.
+	- Set **Archive** to the path of the `bsystem<version>.zip` file.
+ 	- Set **Install to** to the `$HOUDINI_PACKAGE_DIR`, this defaults to `~/Documents/houdini<version>/packages` on Windows, and `~/houdini<version>` on Linux and MacOS.
 
-> `$HOUDINI_USER_PREF_DIR` is the houdini settings folder, on **Windows** it is found at `Documents/houdini<version>`. On **Linux** and **macOS** it is the `~/houdini<version>` directory.
+> NOTE: If you install to another directory you need to set the `BSYSTEM` variable in the `bsystem<version>.json` package file to the correct install directory.
 
-This installs the plugin at the default location, if you keep your packages elsewhere you can set the path with the `BSYSTEM` variable in `bsystem.json` to the desired directory.
+> The `BSYSTEM` environment variable is required by the plugin, don't set the `"hpath"` directly.
 
 ```json
 {
+  "enable": true,
   "env": [
     {
       "BSYSTEM": "$HOUDINI_USER_PREF_DIR/bsystem<version>"
@@ -25,8 +27,6 @@ This installs the plugin at the default location, if you keep your packages else
   "path": "$BSYSTEM"
 }
 ```
-
-> the `BSYSTEM` environment variable is required by the plugin, don't set the `"path"` directly.
 
 # Documentation
 
@@ -62,7 +62,6 @@ The `3@transform` point attribute stores the instance rotation and scale. The ro
 
 Note that `p@orient`, `@N`, `@up`, `@scale` and `@pscale` is not used for setting the rotation and scale, these attributes are ignored. Check out the vex functions [`maketransform()`](https://www.sidefx.com/docs/houdini/vex/functions/maketransform.html) and [`scale()`](https://www.sidefx.com/docs/houdini/vex/functions/scale.html) for ways to quickly convert these attributes to a rotation matrix.
 
-
 ```c
 // N and up to Matrix3
 3@transform = maketransform(@N, @up);
@@ -74,6 +73,7 @@ scale(3@transform, set(@pscale, @pscale, @pscale));
 3@transform = qconvert(p@orient);
 scale(3@transform, set(@pscale, @pscale, @pscale));
 ```
+
 ### Roots group
 
 Instances on a B-System are connected in a branching hierarchy, the `roots` point group defines the origin and direction of this hierarchy. A set of connected instances can only have a single root point. Multiple connected sets will have a root for each set. Single unconnected instances are also roots.
@@ -88,4 +88,4 @@ Assemblies are labeled sets of instances, they are defined by the `s@assembly` p
 
 See the viewer state info panel for hotkeys.
 
-> As per Houdini `20.0` certain keys and inputs remain unavailable for python viewer states. Among others these includes the `WERT` keys, the `ctrl` key while dragging, and `RMB` if using a `Context Menu`. For this reason certain operations map to less intuitive keys such as `a` for rotation instead of `r`, and `shift` to snap instead of `ctrl`. This will change as soon as SideFX frees the keys.
+> For the Houdini `20.0` version certain keys and inputs remain unavailable for python viewer states. Among others these includes the `WERT` keys, the `ctrl` key while dragging, and `RMB` if using a `Context Menu`. For this reason certain operations map to less intuitive keys such as `a` for rotation instead of `r`, and `shift` to snap instead of `ctrl`. This will change as soon as SideFX frees the keys.
